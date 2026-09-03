@@ -1,9 +1,11 @@
-ROADBOOK CLUB CORPORATE V3.1
-- Architecture multi-pages : Accueil / Membres / Balades / Road-book / Rallye / Gestion.
-- Annuaire : 1 membre -> plusieurs voitures.
-- Suppression individuelle d'un membre ou d'une voiture.
-- Suppression de tous les membres, y compris les exemples.
-- Gestion : paramètres de l'application, nom du club, secteur, texte d'accueil, accent, mode.
-- Sauvegarde JSON : export / import.
-- Réinitialisation des exemples ou de toute l'application.
-- Données locales dans cette version de démonstration.
+EPA Club — V4
+- Accueil corporate avec logo et infographie originale d'un véhicule ancien en montagne.
+- Aucun membre, voiture, balade ou historique d'exemple.
+- Accès membre en lecture seule.
+- Accès administrateur : création/modification/suppression membres et road-books.
+- Photo du membre + photos de chaque voiture.
+- Plusieurs voitures par membre.
+- Depuis la fiche membre, un administrateur peut attribuer ou retirer les droits administrateur.
+- Première ouverture : l'accès administrateur permet de créer le premier compte administrateur.
+- Sauvegarde/import JSON.
+- Prototype web local : l'authentification et les données sont stockées dans le navigateur. Pour un déploiement réellement sécurisé, il faudra un backend/authentification serveur.
