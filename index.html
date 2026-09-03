@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171717"><link rel="manifest" href="manifest.json"><title>Roadbook Club</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;margin:0;background:#f4f4f4;color:#171717}
+header{background:#171717;color:white;padding:22px 18px} h1{margin:0 0 4px;font-size:26px} main{max-width:760px;margin:auto;padding:16px}
+.card{background:white;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 10px #0001} button{border:0;border-radius:12px;padding:13px 16px;font-weight:700;margin:5px 3px;background:#171717;color:white}
+.secondary{background:#ddd;color:#171717}.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#eee;margin:3px;font-size:13px}
+.hidden{display:none}.step{font-size:18px;line-height:1.45}.big{font-size:30px;font-weight:800}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,textarea,select{width:100%;box-sizing:border-box;padding:12px;border:1px solid #ccc;border-radius:10px;margin:5px 0 10px;font-size:16px}
+</style></head><body>
+<header><h1>🚗 Roadbook Club</h1><div>Balades • Road-books • Rallye</div></header><main>
+<section id="home"><div class="card"><h2>Prochaine balade</h2><p><b>Vosges & Routes secrètes</b><br>120 km • 8 étapes • départ Bollwiller</p><button onclick="show('participant')">📖 Mon road-book</button><button onclick="show('organizer')" class="secondary">⚙️ Organisateur</button></div>
+<div class="card"><h2>🏆 Classement</h2><p>1. Équipage #12 — 145 pts<br>2. Équipage #04 — 130 pts<br>3. Équipage #07 — 120 pts</p></div>
+<div class="card"><h2>📚 Bibliothèque</h2><p><span class="pill">2026</span><span class="pill">Vosges</span><span class="pill">Forêt-Noire</span><span class="pill">Alsace du Sud</span></p></div></section>
+
+<section id="participant" class="hidden"><button class="secondary" onclick="show('home')">← Accueil</button>
+<div class="card"><h2>📖 Road-book</h2><div id="step"></div><div class="grid"><button onclick="prev()">← Précédente</button><button onclick="next()">Suivante →</button></div><button onclick="answer()">Répondre à la question</button><p id="score"></p></div></section>
+
+<section id="organizer" class="hidden"><button class="secondary" onclick="show('home')">← Accueil</button>
+<div class="card"><h2>⚙️ Créer une balade</h2><label>Nom</label><input id="name" value="Vosges & Routes secrètes"><label>Départ</label><input id="start" value="Bollwiller"><label>Distance (km)</label><input id="km" type="number" value="120"><label>Notes / étapes</label><textarea id="notes">1. Départ de Bollwiller — prendre la direction de la vallée.
+2. Contrôle photo au belvédère.
+3. Pause déjeuner.
+4. Retour par petites routes.</textarea><button onclick="save()">💾 Enregistrer la balade</button><p id="saved"></p></div>
+<div class="card"><h2>🧭 Outils</h2><button onclick="navigator.geolocation?.getCurrentPosition(p=>alert('Position reçue : '+p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5)))">📍 Ma position GPS</button><button onclick="alert('Dans la prochaine étape : carte interactive, points de passage et navigation.')">🗺️ Carte / navigation</button><button onclick="alert('Dans la prochaine étape : photos, contrôles et classement automatique.')">🏁 Rallye / contrôles</button></div></section>
+</main>
+<script>
+const steps=[
+['Étape 1','Départ de Bollwiller. Suivre la vallée par les petites routes.','Question : quel est le nom du village traversé ?'],
+['Étape 2','Au prochain carrefour, prendre à droite vers le belvédère.','Contrôle photo : photographier votre voiture au point indiqué.'],
+['Étape 3','Continuer sur environ 18 km jusqu’à la pause.','Question : altitude du point de vue ?'],
+['Étape 4','Pause déjeuner puis retour par l’itinéraire indiqué.','Bonus : 10 points si l’arrivée est réalisée dans la fenêtre prévue.']];
+let i=0,pts=0;
+function show(id){['home','participant','organizer'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id)); if(id==='participant')render();}
+function render(){let s=steps[i];document.getElementById('step').innerHTML='<div class="big">'+s[0]+'</div><p class="step">'+s[1]+'</p><p><b>'+s[2]+'</b></p><p>Étape '+(i+1)+' / '+steps.length+'</p>';document.getElementById('score').textContent='Score : '+pts+' points';}
+function next(){if(i<steps.length-1)i++;render()} function prev(){if(i>0)i--;render()} function answer(){pts+=10;alert('Réponse enregistrée : +10 points');render()}
+function save(){localStorage.setItem('roadbook',JSON.stringify({name:name.value,start:start.value,km:km.value,notes:notes.value}));saved.textContent='✅ Balade enregistrée sur cet appareil.'}
+</script></body></html>
